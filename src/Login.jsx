@@ -11,6 +11,7 @@ export default function Login() {
   const [authError, setAuthError] = useState(''); 
   const navigate = useNavigate();
 
+  // Validate email and password inputs
   const validateForm = () => {
     const newErrors = {};
     if (!email) newErrors.email = "Email is required.";
@@ -24,10 +25,15 @@ export default function Login() {
     setAuthError(''); 
     
     if (validateForm()) {
+      // Calling loginDoctor from dataService.js
+      // Note: This function automatically saves the 'active_doctor' session in localStorage if successful!
       const result = loginDoctor(email, password);
+      
       if (result.success) {
+        // Session is saved successfully, redirect the doctor to their private dashboard
         navigate('/dashboard'); 
       } else {
+        // Show error if email or password is wrong
         setAuthError(result.message); 
       }
     }
@@ -39,7 +45,9 @@ export default function Login() {
       <div className="side-panel">
         <div className="glass-hero-card">
           <Logo className="hero-logo" />
-          <h1 style={{ fontSize: '3.75rem', fontWeight: '800', color: '#ffffff', letterSpacing: '-0.5px' }}>Epi<span style={{ color: '#2563eb' }}>Detect</span></h1>
+          <h1 style={{ fontSize: '3.75rem', fontWeight: '800', color: '#ffffff', letterSpacing: '-0.5px' }}>
+            Epi<span style={{ color: '#2563eb' }}>Detect</span>
+          </h1>
           <p>Advanced EEG-based epileptic seizure detection and patient data management platform.</p>
         </div>
       </div>
